@@ -160,4 +160,3 @@ git commit -m "Update README with full project documentation"
 git push
 
 This README makes your project look like a real industry-grade ML application, not a college demo.
-
