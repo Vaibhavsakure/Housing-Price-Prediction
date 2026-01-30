@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Housing Price Prediction</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a4d2e;
+            --primary-light: #2d6a4f;
+            --accent: #f4a261;
+            --accent-dark: #e76f51;
+            --bg-gradient-start: #f8f9fa;
+            --bg-gradient-end: #e9ecef;
+            --text-primary: #1a1a1a;
+            --text-secondary: #5a5a5a;
+            --card-bg: #ffffff;
+            --input-border: #d1d5db;
+            --input-focus: #2d6a4f;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            color: var(--text-primary);
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            padding: 3rem 2.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0);
+            }
+            50% {
+                transform: translate(-20px, -20px);
+            }
+        }
+
+        .header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header p {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.9);
+            position: relative;
+            z-index: 1;
+        }
+
+        .form-container {
+            padding: 2.5rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        input,
+        select {
+            padding: 0.875rem 1rem;
+            border: 2px solid var(--input-border);
+            border-radius: 10px;
+            font-size: 1rem;
+            font-family: 'DM Sans', sans-serif;
+            transition: all 0.3s ease;
+            background: #ffffff;
+            color: var(--text-primary);
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--input-focus);
+            box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.1);
+            transform: translateY(-2px);
+        }
+
+        input::placeholder {
+            color: #9ca3af;
+        }
+
+        select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%235a5a5a' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            padding-right: 2.5rem;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+            color: #ffffff;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.125rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-md);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(231, 111, 81, 0.3);
+        }
+
+        .btn-submit:active {
+            transform: translateY(0);
+        }
+
+        .result-container {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border-radius: 10px;
+            border-left: 4px solid var(--primary);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+
+        .result-container.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .result-label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .result-value {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-light);
+        }
+
+        @media (max-width: 640px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-container {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Housing Price Prediction</h1>
+            <p>Predict property values with machine learning</p>
+        </div>
+
+        <div class="form-container">
+            <form id="predictForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="longitude">Longitude</label>
+                        <input type="number" step="any" placeholder="-122.23" id="longitude" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="latitude">Latitude</label>
+                        <input type="number" step="any" placeholder="37.88" id="latitude" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="housing_median_age">Median Age</label>
+                        <input type="number" placeholder="41" id="housing_median_age" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="total_rooms">Total Rooms</label>
+                        <input type="number" placeholder="880" id="total_rooms" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="total_bedrooms">Total Bedrooms</label>
+                        <input type="number" placeholder="129" id="total_bedrooms" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="population">Population</label>
+                        <input type="number" placeholder="322" id="population" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="households">Households</label>
+                        <input type="number" placeholder="126" id="households" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="median_income">Median Income</label>
+                        <input type="number" step="any" placeholder="8.3252" id="median_income" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ocean_proximity">Ocean Proximity</label>
+                        <select id="ocean_proximity">
+                            <option value="NEAR BAY">NEAR BAY</option>
+                            <option value="INLAND">INLAND</option>
+                            <option value="NEAR OCEAN">NEAR OCEAN</option>
+                            <option value="ISLAND">ISLAND</option>
+                            <option value="<1H OCEAN">&lt;1H OCEAN</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-submit">Predict Price</button>
+            </form>
+
+            <div class="result-container" id="resultContainer">
+                <div class="result-label">Predicted Median House Value</div>
+                <div class="result-value" id="result"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("predictForm").addEventListener("submit", async function(e) {
+            e.preventDefault();
+
+            const data = {
+                longitude: parseFloat(longitude.value),
+                latitude: parseFloat(latitude.value),
+                housing_median_age: parseInt(housing_median_age.value),
+                total_rooms: parseInt(total_rooms.value),
+                total_bedrooms: parseInt(total_bedrooms.value),
+                population: parseInt(population.value),
+                households: parseInt(households.value),
+                median_income: parseFloat(median_income.value),
+                ocean_proximity: ocean_proximity.value
+            };
+
+            const response = await fetch("http://127.0.0.1:8000/predict", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify(data)
+            });
+
+            const result = await response.json();
+            
+            const resultContainer = document.getElementById("resultContainer");
+            const resultElement = document.getElementById("result");
+            
+            resultElement.innerText = "$" + result.predicted_median_house_value.toFixed(2);
+            resultContainer.classList.add("show");
+        });
+    </script>
+</body>
+</html>
