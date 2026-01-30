@@ -121,3 +121,43 @@ Categorical feature: One-Hot Encoding (ocean_proximity)
 Evaluation Metric: RMSE
 
 Hyperparameter Tuning: GridSearchCV<img width="954" height="869" alt="image" src="https://github.com/user-attachments/assets/d462dc8a-ace2-462c-9431-f357d0612486" />
+
+
+<img width="698" height="672" alt="image" src="https://github.com/user-attachments/assets/a7cb5de0-0103-4ae6-b93b-3dd06e3dcc3c" />
+
+
+🚀 Future Improvements
+
+🔹 Deploy API online (Render / Railway / AWS)
+
+🔹 Replace static HTML with React frontend
+
+🔹 Add authentication
+
+🔹 Add CI/CD using GitHub Actions
+
+🔹 Model monitoring & logging
+
+👤 Author
+
+Vaibhav Sakure
+B.Tech – AI & Data Science
+GitHub: https://github.com/Vaibhavsakure
+
+⭐ If you like this project
+
+Give it a ⭐ on GitHub — it really helps!
+
+
+---
+
+## ✅ NEXT STEPS (Recommended)
+
+1️⃣ Commit this README  
+```bash
+git add README.md
+git commit -m "Update README with full project documentation"
+git push
+
+This README makes your project look like a real industry-grade ML application, not a college demo.
+
